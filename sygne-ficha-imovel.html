@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sygné — Ficha do Imóvel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --cream:#F2EFE4;
+    --brown:#8B8279;
+    --sage:#7E8A7B;
+    --dark:#1B2430;
+    --gold:#927E51;
+    --gold-light:#b5a070;
+    --cream-dark:#e0dace;
+    --card-bg:#faf8f3;
+  }
+  body{
+    background:var(--cream);
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    color:var(--dark);
+    min-height:100vh;
+  }
+  .page{
+    max-width:720px;
+    margin:0 auto;
+    padding:3rem 2rem 4rem;
+  }
+  .header{
+    text-align:center;
+    margin-bottom:3rem;
+    padding-bottom:2rem;
+    border-bottom:0.5px solid var(--gold);
+  }
+  .brand-name{
+    font-family:'IM Fell English',Georgia,'Times New Roman',serif;
+    font-size:36px;
+    letter-spacing:6px;
+    color:var(--dark);
+    font-weight:400;
+    margin-bottom:4px;
+  }
+  .brand-sub{
+    font-size:11px;
+    letter-spacing:4px;
+    color:var(--gold);
+    text-transform:uppercase;
+    margin-bottom:1.5rem;
+  }
+  .form-title{
+    font-family:'IM Fell English',Georgia,serif;
+    font-size:20px;
+    color:var(--dark);
+    font-weight:400;
+    margin-bottom:6px;
+  }
+  .gold-line{
+    width:40px;
+    height:0.5px;
+    background:var(--gold);
+    margin:0 auto 10px;
+  }
+  .form-sub{
+    font-size:13px;
+    color:var(--brown);
+    letter-spacing:0.3px;
+  }
+  .section{
+    margin-bottom:1.5rem;
+    border:0.5px solid var(--cream-dark);
+    background:var(--card-bg);
+  }
+  .sec-header{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:13px 18px;
+    background:var(--cream-dark);
+    cursor:pointer;
+    user-select:none;
+  }
+  .sec-icon{font-size:16px;color:var(--gold);}
+  .sec-title{
+    font-family:'IM Fell English',Georgia,serif;
+    font-size:15px;
+    color:var(--dark);
+    font-weight:400;
+    flex:1;
+    letter-spacing:0.5px;
+  }
+  .sec-chevron{
+    font-size:14px;
+    color:var(--brown);
+    transition:transform 0.2s;
+  }
+  .sec-chevron.open{transform:rotate(180deg);}
+  .sec-body{padding:18px;display:none;}
+  .sec-body.open{display:block;}
+  .field{margin-bottom:14px;}
+  .field:last-child{margin-bottom:0;}
+  .qlabel{
+    display:block;
+    font-size:12px;
+    color:var(--brown);
+    margin-bottom:5px;
+    letter-spacing:0.3px;
+  }
+  .qtext{
+    display:block;
+    font-size:13px;
+    color:var(--dark);
+    margin-bottom:7px;
+    letter-spacing:0.2px;
+  }
+  .radios{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px;}
+  .rbtn{
+    padding:6px 16px;
+    border:0.5px solid var(--brown);
+    background:transparent;
+    font-size:12px;
+    color:var(--dark);
+    cursor:pointer;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    letter-spacing:0.3px;
+    transition:all 0.15s;
+  }
+  .rbtn:hover{background:var(--cream-dark);}
+  .rbtn.sel{background:var(--dark);border-color:var(--dark);color:var(--cream);}
+  .tag-group{display:flex;gap:6px;flex-wrap:wrap;}
+  .tag{
+    padding:5px 13px;
+    border:0.5px solid var(--brown);
+    background:transparent;
+    font-size:12px;
+    color:var(--dark);
+    cursor:pointer;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    letter-spacing:0.3px;
+    transition:all 0.15s;
+  }
+  .tag:hover{background:var(--cream-dark);}
+  .tag.sel{background:var(--gold);border-color:var(--gold);color:#fff;}
+  textarea,input[type=text],input[type=number]{
+    width:100%;
+    border:0.5px solid var(--brown);
+    background:var(--card-bg);
+    padding:9px 11px;
+    font-size:13px;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    color:var(--dark);
+    outline:none;
+    transition:border-color 0.15s;
+  }
+  textarea{resize:vertical;min-height:56px;}
+  textarea:focus,input:focus{border-color:var(--gold);}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+  .divider{border:none;border-top:0.5px solid var(--cream-dark);margin:14px 0;}
+  .hint{font-size:11px;color:var(--brown);margin-top:4px;letter-spacing:0.2px;}
+  .copy-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    width:100%;
+    padding:14px;
+    border:0.5px solid var(--gold);
+    background:transparent;
+    font-size:12px;
+    color:var(--gold);
+    cursor:pointer;
+    font-family:'Gill Sans','Gill Sans MT',Calibri,sans-serif;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    margin-top:2.5rem;
+    transition:all 0.2s;
+  }
+  .copy-btn:hover{background:var(--gold);color:#fff;}
+  .footer{
+    text-align:center;
+    margin-top:2.5rem;
+    padding-top:1.5rem;
+    border-top:0.5px solid var(--gold);
+    font-size:11px;
+    color:var(--brown);
+    letter-spacing:2px;
+    text-transform:uppercase;
+  }
+  @media(max-width:520px){
+    .row2,.row3{grid-template-columns:1fr;}
+    .page{padding:2rem 1rem 3rem;}
+    .brand-name{font-size:28px;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="brand-name">SYGNÉ</div>
+    <div class="brand-sub">Real Estate Advisory</div>
+    <div class="form-title">Ficha do imóvel</div>
+    <div class="gold-line"></div>
+    <div class="form-sub">Preencha o que souber — o restante ajustamos juntos</div>
+  </div>
+
+  <!-- Dados gerais -->
+  <div class="section">
+    <div class="sec-header" onclick="toggle(this)">
+      <i class="ti ti-home sec-icon" aria-hidden="true"></i>
+      <span class="sec-title">Dados gerais</span>
+      <i class="ti ti-chevron-down sec-chevron open"></i>
+    </div>
+    <div class="sec-body open">
+      <div class="row2">
+        <div class="field"><span class="qlabel">Tipo do imóvel</span><input type="text" placeholder="Ex: casa, sobrado, chácara..." id="tipo"></div>
+        <div class="field"><span class="qlabel">Ano de construção</span><input type="number" placeholder="Ex: 2005" id="ano"></div>
+      </div>
+      <div class="row3">
+        <div class="field"><span class="qlabel">Área total (m²)</span><input type="number" id="area_total"></div>
+        <div class="field"><span class="qlabel">Área construída (m²)</span><input type="number" id="area_const"></div>
+        <div class="field"><span class="qlabel">IPTU anual (R$)</span><input type="number" id="iptu"></div>
+      </div>
+      <div class="row3">
+        <div class="field"><span class="qlabel">Quartos</span><input type="number" id="quartos"></div>
+        <div class="field"><span class="qlabel">Suítes</span><input type="number" id="suites"></div>
+        <div class="field"><span class="qlabel">Banheiros</span><input type="number" id="banheiros"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><span class="qlabel">Vagas de garagem</span><input type="number" id="vagas"></div>
+        <div class="field"><span class="qlabel">Face solar</span><input type="text" placeholder="Ex: Norte, Nascente..." id="face"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ambientes -->
+  <div class="section">
+    <div class="sec-header" onclick="toggle(this)">
+      <i class="ti ti-layout sec-icon" aria-hidden="true"></i>
+      <span class="sec-title">Ambientes e espaços</span>
+      <i class="ti ti-chevron-down sec-chevron"></i>
+    </div>
+    <div class="sec-body">
+      <div class="field">
+        <span class="qtext">Ambientes internos</span>
+        <div class="tag-group">
+          <button class="tag" onclick="toggleTag(this)">Sala de estar</button>
+          <button class="tag" onclick="toggleTag(this)">Sala de jantar</button>
+          <button class="tag" onclick="toggleTag(this)">Lavabo</button>
+          <button class="tag" onclick="toggleTag(this)">Varanda</button>
+          <button class="tag" onclick="toggleTag(this)">Escritório</button>
+          <button class="tag" onclick="toggleTag(this)">Despensa</button>
+          <button class="tag" onclick="toggleTag(this)">Quarto de serviço</button>
+          <button class="tag" onclick="toggleTag(this)">Área de serviço</button>
+          <button class="tag" onclick="toggleTag(this)">Cozinha integrada</button>
+        </div>
+      </div>
+      <hr class="divider">
+      <div class="field">
+        <span class="qtext">Lazer e área externa</span>
+        <div class="tag-group">
+          <button class="tag" onclick="toggleTag(this)">Piscina</button>
+          <button class="tag" onclick="toggleTag(this)">Churrasqueira</button>
+          <button class="tag" onclick="toggleTag(this)">Forno a lenha</button>
+          <button class="tag" onclick="toggleTag(this)">Fire pit</button>
+          <button class="tag" onclick="toggleTag(this)">Pomar</button>
+          <button class="tag" onclick="toggleTag(this)">Jardim</button>
+          <button class="tag" onclick="toggleTag(this)">Lareira interna</button>
+          <button class="tag" onclick="toggleTag(this)">Banheira</button>
+          <button class="tag" onclick="toggleTag(this)">Sauna</button>
+          <button class="tag" onclick="toggleTag(this)">Quadra</button>
+          <button class="tag" onclick="toggleTag(this)">Área gourmet</button>
+        </div>
+      </div>
+      <hr class="divider">
+      <div class="field"><span class="qlabel">Detalhes relevantes (piscina aquecida, banheira com hidromassagem, pomar produtivo...)</span><textarea id="det_amb"></textarea></div>
+    </div>
+  </div>
+
+  <!-- Infraestrutura -->
+  <div class="section">
+    <div class="sec-header" onclick="toggle(this)">
+      <i class="ti ti-settings sec-icon" aria-hidden="true"></i>
+      <span class="sec-title">Infraestrutura e conforto</span>
+      <i class="ti ti-chevron-down sec-chevron"></i>
+    </div>
+    <div class="sec-body">
+      <div class="field">
+        <div class="tag-group">
+          <button class="tag" onclick="toggleTag(this)">Ar-condicionado</button>
+          <button class="tag" onclick="toggleTag(this)">Aquecimento solar</button>
+          <button class="tag" onclick="toggleTag(this)">Aquecimento a gás</button>
+          <button class="tag" onclick="toggleTag(this)">Aquecimento elétrico</button>
+          <button class="tag" onclick="toggleTag(this)">Portão automatizado</button>
+          <button class="tag" onclick="toggleTag(this)">Automação residencial</button>
+          <button class="tag" onclick="toggleTag(this)">Alarme</button>
+          <button class="tag" onclick="toggleTag(this)">Câmeras</button>
+          <button class="tag" onclick="toggleTag(this)">Cerca elétrica</button>
+          <button class="tag" onclick="toggleTag(this)">Monitoramento 24h</button>
+          <button class="tag" onclick="toggleTag(this)">Isolamento térmico</button>
+          <button class="tag" onclick="toggleTag(this)">Gerador</button>
+          <button class="tag" onclick="toggleTag(this)">Painel solar</button>
+        </div>
+      </div>
+      <hr class="divider">
+      <div class="field"><span class="qlabel">Complementos e detalhes</span><textarea id="det_infra"></textarea></div>
+    </div>
+  </div>
+
+  <!-- Acabamentos -->
+  <div class="section">
+    <div class="sec-header" onclick="toggle(this)">
+      <i class="ti ti-hammer sec-icon" aria-hidden="true"></i>
+      <span class="sec-title">Acabamentos e materiais</span>
+      <i class="ti ti-chevron-down sec-chevron"></i>
+    </div>
+    <div class="sec-body">
+      <div class="field">
+        <div class="tag-group">
+          <button class="tag" onclick="toggleTag(this)">Madeira maciça</button>
+          <button class="tag" onclick="toggleTag(this)">Pedra natural</button>
+          <button class="tag" onclick="toggleTag(this)">Porcelanato grande formato</button>
+          <button class="tag" onclick="toggleTag(this)">Mármore / granito</button>
+          <button class="tag" onclick="toggleTag(this)">Esquadrias de alumínio</button>
+          <button class="tag" onclick="toggleTag(this)">Esquadrias de madeira</button>
+          <button class="tag" onclick="toggleTag(this)">Telha cerâmica</button>
+          <button class="tag" onclick="toggleTag(this)">Telha metálica</button>
+          <button class="tag" onclick="toggleTag(this)">Concreto aparente</button>
+        </div>
+      </div>
+      <hr class="divider">
+      <div class="field"><span class="qlabel">Espécie de madeira, tratamentos, reformas recentes...</span><textarea id="det_acab"></textarea></div>
+    </div>
+  </div>
+
+  <!-- Terreno -->
+  <div class="section">
+    <div class="sec-header" onclick="toggle(this)">
+      <i class="ti ti-map-pin sec-icon" aria-hidden="true"></i>
+      <span class="sec-title">Terreno e implantação</span>
+      <i class="ti ti-chevron-down sec-chevron"></i>
+    </div>
+    <div class="sec-body">
+      <div class="field">
+        <span class="qtext">O imóvel possui cercamento / muro?</span>
+        <div class="radios">
+          <button class="rbtn" onclick="selR(this)">Sim, total</button>
+          <button class="rbtn" onclick="selR(this)">Parcial</button>
+          <button class="rbtn" onclick="selR(this)">Não</button>
+        </div>
+      </div>
+      <div class="field">
+        <span class="qtext">A residência está no ponto mais alto do terreno?</span>
+        <div class="radios">
+          <button class="rbtn" onclick="selR(this)">Sim</button>
+          <button class="rbtn" onclick="selR(this)">Não</button>
+        </div>
+      </div>
+      <div class="field"><span class="qlabel">Vistas, privacidade, incidência solar, topografia...</span><textarea id="det_terreno"></textarea></div>
+    </div>
+  </div>
+
+  <!-- Negociação -->
+  <div class="section">
+    <div class="sec-header" onclick="toggle(this)">
+      <i class="ti ti-receipt sec-icon" aria-hidden="true"></i>
+      <span class="sec-title">Condições de negociação</span>
+      <i class="ti ti-chevron-down sec-chevron"></i>
+    </div>
+    <div class="sec-body">
+      <div class="field">
+        <span class="qtext">Aceita financiamento bancário?</span>
+        <div class="radios"><button class="rbtn" onclick="selR(this)">Sim</button><button class="rbtn" onclick="selR(this)">Não</button><button class="rbtn" onclick="selR(this)">A avaliar</button></div>
+      </div>
+      <div class="field">
+        <span class="qtext">Aceita permuta?</span>
+        <div class="radios"><button class="rbtn" onclick="selR(this)">Sim</button><button class="rbtn" onclick="selR(this)">Não</button><button class="rbtn" onclick="selR(this)">A avaliar</button></div>
+      </div>
+      <div class="field">
+        <span class="qtext">Aceita parcelamento direto?</span>
+        <div class="radios"><button class="rbtn" onclick="selR(this)">Sim</button><button class="rbtn" onclick="selR(this)">Não</button><button class="rbtn" onclick="selR(this)">A avaliar</button></div>
+      </div>
+      <div class="field">
+        <span class="qtext">Margem para negociação (proposta à vista)?</span>
+        <div class="radios"><button class="rbtn" onclick="selR(this)">Sim</button><button class="rbtn" onclick="selR(this)">Não</button><button class="rbtn" onclick="selR(this)">Depende da proposta</button></div>
+      </div>
+      <div class="field">
+        <span class="qtext">Outros ativos como entrada (veículo, consórcio...)?</span>
+        <div class="radios"><button class="rbtn" onclick="selR(this)">Sim</button><button class="rbtn" onclick="selR(this)">Não</button><button class="rbtn" onclick="selR(this)">A avaliar</button></div>
+      </div>
+      <hr class="divider">
+      <div class="field"><span class="qlabel">Pendências documentais ou observações sobre negociação</span><textarea id="det_negoc"></textarea></div>
+    </div>
+  </div>
+
+  <!-- Itens inclusos -->
+  <div class="section">
+    <div class="sec-header" onclick="toggle(this)">
+      <i class="ti ti-package sec-icon" aria-hidden="true"></i>
+      <span class="sec-title">Itens inclusos na venda</span>
+      <i class="ti ti-chevron-down sec-chevron"></i>
+    </div>
+    <div class="sec-body">
+      <div class="field">
+        <span class="qtext">Selecione os itens que serão <strong>retirados</strong> pelo proprietário</span>
+        <div class="tag-group" style="margin-top:8px;">
+          <button class="tag" onclick="toggleTag(this)">Ar-condicionados</button>
+          <button class="tag" onclick="toggleTag(this)">Persianas / cortinas</button>
+          <button class="tag" onclick="toggleTag(this)">Lustres / luminárias</button>
+          <button class="tag" onclick="toggleTag(this)">Eletrodomésticos embutidos</button>
+          <button class="tag" onclick="toggleTag(this)">Móveis planejados</button>
+          <button class="tag" onclick="toggleTag(this)">Equipamentos de gourmet</button>
+          <button class="tag" onclick="toggleTag(this)">Automação / segurança</button>
+        </div>
+      </div>
+      <div class="field"><span class="qlabel">Outros itens ou observações</span><textarea id="det_itens" placeholder="Ex: lustre da sala de jantar, adega..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- Para o catálogo -->
+  <div class="section">
+    <div class="sec-header" onclick="toggle(this)">
+      <i class="ti ti-sparkles sec-icon" aria-hidden="true"></i>
+      <span class="sec-title">Para o catálogo</span>
+      <i class="ti ti-chevron-down sec-chevron"></i>
+    </div>
+    <div class="sec-body">
+      <div class="field"><span class="qlabel">O que você mais aprecia neste imóvel?</span><textarea id="aprecia"></textarea></div>
+      <div class="field"><span class="qlabel">Algum diferencial que passa despercebido em uma visita rápida?</span><textarea id="diferencial"></textarea></div>
+      <div class="field"><span class="qlabel">Como é a vizinhança e a rotina da região?</span><textarea id="vizinhanca"></textarea></div>
+      <div class="field"><span class="qlabel">Se fosse resumir o imóvel em poucas palavras para um amigo, como descreveria?</span><textarea id="resumo"></textarea></div>
+    </div>
+  </div>
+
+  <button class="copy-btn" onclick="copiar()">
+    <i class="ti ti-copy" aria-hidden="true"></i> Copiar respostas
+  </button>
+
+  <div class="footer">Sygné Real Estate Advisory</div>
+
+</div>
+
+<script>
+function toggle(h){
+  const b=h.nextElementSibling,c=h.querySelector('.sec-chevron');
+  const o=b.classList.contains('open');
+  b.classList.toggle('open',!o);
+  c.classList.toggle('open',!o);
+}
+function selR(btn){
+  btn.parentElement.querySelectorAll('.rbtn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+function toggleTag(btn){btn.classList.toggle('sel');}
+function copiar(){
+  const fs=[
+    ['tipo','Tipo'],['ano','Ano de construção'],['area_total','Área total (m²)'],
+    ['area_const','Área construída (m²)'],['iptu','IPTU'],['quartos','Quartos'],
+    ['suites','Suítes'],['banheiros','Banheiros'],['vagas','Vagas'],['face','Face solar'],
+    ['det_amb','Detalhes de ambientes'],['det_infra','Infraestrutura'],
+    ['det_acab','Acabamentos'],['det_terreno','Terreno'],['det_negoc','Negociação'],
+    ['det_itens','Itens a retirar'],['aprecia','O que aprecia'],
+    ['diferencial','Diferenciais'],['vizinhanca','Vizinhança'],['resumo','Resumo']
+  ];
+  let lines=['SYGNÉ — FICHA DO IMÓVEL\n'];
+  fs.forEach(([id,label])=>{
+    const el=document.getElementById(id);
+    if(el&&el.value.trim())lines.push(label+': '+el.value.trim());
+  });
+  const tags=document.querySelectorAll('.tag.sel');
+  if(tags.length)lines.push('\nItens selecionados: '+Array.from(tags).map(t=>t.textContent.trim()).join(', '));
+  document.querySelectorAll('.rbtn.sel').forEach(r=>{
+    const q=r.parentElement.previousElementSibling;
+    if(q)lines.push(q.textContent.trim()+' → '+r.textContent.trim());
+  });
+  navigator.clipboard.writeText(lines.join('\n')).then(()=>{
+    const btn=document.querySelector('.copy-btn');
+    btn.innerHTML='<i class="ti ti-check"></i> Copiado!';
+    setTimeout(()=>btn.innerHTML='<i class="ti ti-copy"></i> Copiar respostas',2500);
+  });
+}
+</script>
+</body>
+</html>
